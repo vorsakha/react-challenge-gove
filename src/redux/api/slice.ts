@@ -1,17 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { SliceTypes } from "../../../types";
 import { getPatients } from "./thunk";
-
-interface SliceType {
-  data: string[];
-  loading: boolean;
-}
 
 const slice = createSlice({
   name: "api",
   initialState: {
     data: [],
     loading: false,
-  } as SliceType,
+  } as SliceTypes,
   //   },
 
   reducers: {},
