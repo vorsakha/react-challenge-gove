@@ -1,10 +1,12 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import apiReducer from "./redux/api/slice";
 
 // Redux Config
 const reducer = combineReducers({
-  // auth: authReducer,
+  apiReducer,
 });
 
 const store = configureStore({
@@ -19,7 +21,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" />
+          <Route exact path="/" component={Dashboard} />
         </Switch>
       </Router>
     </Provider>
