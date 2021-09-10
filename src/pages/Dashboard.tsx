@@ -1,18 +1,34 @@
-import React, { useEffect } from "react";
-import { getPatients } from "../redux/api/thunk";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { Link, useLocation } from "react-router-dom";
+import DataTable from "../components/DataTable";
+import Search from "../components/Search";
+import { useAppSelector } from "../redux/hooks";
 
 const Dashboard = () => {
-  const state = useAppSelector((state) => state);
-  console.log(state);
+  const { data } = useAppSelector((state) => state.apiReducer);
 
-  const dispatch = useAppDispatch();
+  let location = useLocation();
+  return (
+    <div>
+      <Link
+        to={{
+          pathname: `/details/${data[0]?.login.salt}`,
+          state: { background: location },
+        }}
+      >
+        Link modal
+      </Link>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+        deleniti modi culpa ipsa. Voluptatem fuga eius quis dicta fugit itaque
+        nobis ipsam ipsa corrupti. Illum cupiditate nulla delectus blanditiis
+        repellat pariatur illo? Odit, fuga nisi.
+      </p>
 
-  useEffect(() => {
-    dispatch(getPatients());
-  }, [dispatch]);
+      <Search />
 
-  return <div>Dashboard</div>;
+      <DataTable />
+    </div>
+  );
 };
 
 export default Dashboard;
