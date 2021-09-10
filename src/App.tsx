@@ -30,6 +30,7 @@ function App() {
       <Layout>
         <Switch location={background || location}>
           <Route exact path="/" component={Dashboard} />
+          <Route exact path="/page/:id" component={Dashboard} />
         </Switch>
 
         {background && <Route path="/details/:id" component={Details} />}
