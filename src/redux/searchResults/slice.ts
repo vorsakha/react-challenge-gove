@@ -5,10 +5,10 @@ const slice = createSlice({
   name: "search",
   initialState: {
     searchData: [],
-  },
+  } as SearchStateTypes,
   reducers: {
     setSearchResults: (state: SearchStateTypes, action: PayloadAction<any>) => {
-      state.searchData = action.payload.data;
+      state.searchData = action.payload;
     },
   },
 });
