@@ -22,7 +22,6 @@ const DataTable = () => {
 
           return (
             <tr key={item.login.salt}>
-              {" "}
               <td>{name}</td>
               <td>{item.gender}</td>
               <td>{formatDate(item.dob.date)}</td>
