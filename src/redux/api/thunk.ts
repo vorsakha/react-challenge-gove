@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://randomuser.me/api/?results=50";
+const url = "https://randomuser.me/api/?results=50&seed=static";
 
 export const getPatients = createAsyncThunk("api/getPatients", async () => {
   const res = await axios.get(url);
