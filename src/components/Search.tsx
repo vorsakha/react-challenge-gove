@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setSearchResults } from "../redux/searchResults/slice";
 import { useLocation, useHistory } from "react-router-dom";
+import { GoSearch as SearchIcon } from "@react-icons/all-files/go/GoSearch";
 
 const Search = () => {
   const [params, setParams] = useState<string>("");
-  const [filterByName, setFilterByName] = useState<boolean>(false);
+  const [filterByName, setFilterByName] = useState<boolean>(true);
 
   const { pathname } = useLocation();
   const history = useHistory();
@@ -31,7 +32,9 @@ const Search = () => {
           return name.includes(normalizedParams);
         })
       : data.filter((item) => {
-          const nationality = item.location.country.toUpperCase();
+          const nationality = item.location.country
+            .replace(/ /g, "")
+            .toUpperCase();
           const normalizedParams = params.replace(/ /g, "").toUpperCase();
 
           return nationality.includes(normalizedParams);
@@ -42,9 +45,10 @@ const Search = () => {
 
   return (
     <div>
-      <div>
+      <div className="flex gap-8">
         <div>
           <input
+            className="mr-2"
             type="radio"
             id="name"
             name="filter by"
@@ -52,11 +56,14 @@ const Search = () => {
             checked={filterByName}
             onChange={() => setFilterByName(true)}
           />
-          <label htmlFor="name">Search by name</label>
+          <label className="cursor-pointer" htmlFor="name">
+            Search by name
+          </label>
         </div>
 
         <div>
           <input
+            className="mr-2"
             type="radio"
             id="nationality"
             name="filter by"
@@ -64,10 +71,22 @@ const Search = () => {
             checked={!filterByName}
             onChange={() => setFilterByName(false)}
           />
-          <label htmlFor="nationality">Search by nationality</label>
+          <label className="cursor-pointer" htmlFor="nationality">
+            Search by nationality
+          </label>
         </div>
       </div>
-      <input value={params} onChange={(e) => handleSearch(e)} type="search" />
+      <div className="flex p-1 w-full rounded border border-opacity-40 border-gray-700 mb-4 bg-white">
+        <input
+          className="w-full focus:outline-none px-2"
+          value={params}
+          onChange={(e) => handleSearch(e)}
+          type="search"
+        />
+        <span className="flex items-center bg-grey-lighter rounded rounded-r-none px-3 font-bold text-grey-darker opacity-50">
+          <SearchIcon />
+        </span>
+      </div>
     </div>
   );
 };
