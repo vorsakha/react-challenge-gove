@@ -6,11 +6,13 @@ import Dashboard from "./pages/Dashboard";
 import Details from "./pages/Details";
 import apiReducer from "./redux/api/slice";
 import searchReducer from "./redux/searchResults/slice";
+import pageReducer from "./redux/page/slice";
 
 // Redux Config
 const reducer = combineReducers({
   apiReducer,
   searchReducer,
+  pageReducer,
 });
 
 const store = configureStore({
@@ -21,9 +23,19 @@ export type RootState = ReturnType<typeof reducer>;
 export type AppDispatch = typeof store.dispatch;
 
 function App() {
-  let location: any = useLocation();
+  const location: any = useLocation();
 
-  let background = location.state && location.state.background;
+  const background = location.state && location.state.background;
+
+  const bg = !background
+    ? {
+        pathname: `/page/1`,
+        search: "",
+        hash: "",
+        state: undefined,
+        key: "xmn0oh",
+      }
+    : null;
 
   return (
     <Provider store={store}>
@@ -33,7 +45,9 @@ function App() {
           <Route exact path="/page/:id" component={Dashboard} />
         </Switch>
 
-        {background && <Route path="/details/:id" component={Details} />}
+        {(background || bg) && (
+          <Route path="/details/:id" component={Details} />
+        )}
       </Layout>
     </Provider>
   );
