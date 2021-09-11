@@ -2,36 +2,33 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, Link, useHistory } from "react-router-dom";
 import { RiCloseLine as CloseIcon } from "@react-icons/all-files/ri/RiCloseLine";
 import { DetailedData } from "../../types";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
 import formatDate from "../utils/formatDate";
 import handleBlockScroll from "../utils/handleBlockScroll";
 import useClickOutside from "../utils/useClickOutside";
-import { setCurrentPage } from "../redux/page/slice";
 
 const Details = () => {
   const [detailed, setDetailed] = useState<DetailedData | null>(null);
 
-  const dispatch = useAppDispatch();
-
   const { searchData } = useAppSelector((state) => state.searchReducer);
-  const { currentPage } = useAppSelector((state) => state.pageReducer);
-
-  const itemsPerPage = 9;
-
-  const history = useHistory();
 
   const { id } = useParams<{ id: string }>();
 
+  const history = useHistory();
+
+  // Handle close modal
   const ref = useRef(null);
   const handleCloseButton = () => {
     handleBlockScroll(false);
 
-    history.push(`/page/${currentPage}`);
+    //history.push(`/page/1`);
+    history.goBack();
   };
   useClickOutside(ref, handleCloseButton);
 
+  // Filter the data that the params is requesting
   const filterData = () => {
-    const newData = searchData[Number(id) - 1];
+    const newData = searchData.filter((item) => item.login.salt === id)[0];
 
     setDetailed(newData);
   };
@@ -43,12 +40,6 @@ const Details = () => {
   useEffect(() => {
     handleBlockScroll(true);
   }, []);
-
-  useEffect(() => {
-    const page = Math.ceil(Number(id) / itemsPerPage);
-
-    dispatch(setCurrentPage(page));
-  }, [id, dispatch]);
 
   const name = `${detailed?.name.first} ${detailed?.name.last}` || "";
   const url = window.location.href;
@@ -98,7 +89,7 @@ const Details = () => {
             {detailed?.location.country}
           </p>
           <p className="py-1 mr-1">
-            <span className="font-bold">ID:</span> {id}
+            <span className="font-bold">ID:</span> {detailed?.login.salt}
           </p>
           <p className="py-1 mr-1">
             <span className="font-bold">URL:</span> {url}
