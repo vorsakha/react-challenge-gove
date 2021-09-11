@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { NavLink as Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { ArrayTypes } from "../../types";
 import { useAppSelector } from "../redux/hooks";
+import { FaSortAlphaDown as AlphabeticIcon } from "@react-icons/all-files/fa/FaSortAlphaDown";
 import formatDate from "../utils/formatDate";
 import range from "../utils/range";
 
 const DataTable = () => {
   const [paginatedData, setPaginatedData] = useState<ArrayTypes>([]);
-  const [pages, setPages] = useState([1]);
   const [detailId, setDetailId] = useState([1]);
   const itemsPerPage = 9;
 
@@ -16,8 +16,6 @@ const DataTable = () => {
   const { id } = useParams<{ id: string }>();
 
   const location = useLocation();
-
-  const { pathname } = useLocation();
 
   useEffect(() => {
     const itemsQty: number[] = range(50);
@@ -30,14 +28,6 @@ const DataTable = () => {
 
     setDetailId(sliced);
   }, [id]);
-
-  useEffect(() => {
-    const length = range(Math.ceil(searchData.length / itemsPerPage)) || [1];
-
-    setPages(length);
-  }, [searchData.length]);
-
-  console.log(searchData);
 
   useEffect(() => {
     const startIndex = Number(id) * itemsPerPage - 9 || 0;
@@ -57,8 +47,11 @@ const DataTable = () => {
           <table className="border border-opacity-40 border-gray-700 p-4 w-full">
             <thead className="bg-gray-300">
               <tr className="border border-opacity-40 border-gray-700">
-                <th className="p-2 border border-opacity-40 border-gray-700">
-                  Name
+                <th className="p-2 border border-opacity-40 border-gray-700 cursor-pointer relative">
+                  Name{" "}
+                  <span className="absolute right-2 top-3.5 opacity-80">
+                    <AlphabeticIcon />
+                  </span>
                 </th>
                 <th className="p-2 border border-opacity-40 border-gray-700">
                   Gender
@@ -103,21 +96,6 @@ const DataTable = () => {
               })}
             </tbody>
           </table>
-
-          <div className="mt-4 flex justify-center">
-            {pages.map((i) => (
-              <Link
-                className={`${
-                  pathname === "/" && i === 1 ? "bg-gray-200" : "bg-white"
-                } border border-opacity-40 border-gray-700 py-1 px-4 mx-1 font-bold hover:bg-gray-200`}
-                activeClassName="bg-gray-200"
-                to={`/page/${i}`}
-                key={i}
-              >
-                {i}
-              </Link>
-            ))}
-          </div>
         </>
       )}
     </div>
