@@ -42,7 +42,7 @@ const Search = () => {
   }, [params, data, dispatch, filterByName]);
 
   return (
-    <div>
+    <div className="mb-4">
       <div className="flex gap-8">
         <div>
           <input
@@ -74,7 +74,7 @@ const Search = () => {
           </label>
         </div>
       </div>
-      <div className="flex p-1 w-full rounded border border-opacity-40 border-gray-700 mb-4 bg-white">
+      <div className="flex p-1 w-full border border-opacity-40 border-gray-700 bg-white">
         <input
           className="w-full focus:outline-none px-2"
           value={params}
