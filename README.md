@@ -1,6 +1,6 @@
-<h1 align="center">Gove Front-End Challenge 2021</h1>
+<h1 align="center">Front-End Challenge 🏅 2021</h1>
 
-## 🚀Tech Stack
+## 🧰Tech Stack
 
 - React.js
 - Tailwindcss
@@ -22,7 +22,7 @@ yarn install
 ### ✔️Develop
 
 ```
-yarn dev
+yarn start
 ```
 
 ### ✔️Build
@@ -37,5 +37,4 @@ Challenge by Coodesh.
 
 <!-- TODO
 - modal when link f5 bugs searchData at DataTable
-- README
 -->
