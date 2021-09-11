@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
+import { useParams, Link, useHistory, useLocation } from "react-router-dom";
 import { RiCloseLine as CloseIcon } from "@react-icons/all-files/ri/RiCloseLine";
 import { DetailedData } from "../../types";
 import { useAppSelector } from "../redux/hooks";
 import formatDate from "../utils/formatDate";
 import handleBlockScroll from "../utils/handleBlockScroll";
 import useClickOutside from "../utils/useClickOutside";
+import { motion } from "framer-motion";
 
 const Details = () => {
   const [detailed, setDetailed] = useState<DetailedData | null>(null);
@@ -16,13 +17,16 @@ const Details = () => {
 
   const history = useHistory();
 
+  const location: any = useLocation();
+
   // Handle close modal
   const ref = useRef(null);
   const handleCloseButton = () => {
     handleBlockScroll(false);
 
-    //history.push(`/page/1`);
-    history.goBack();
+    // If user came from within the dashboard goBack
+    // If user came from URL push page 1
+    location.state ? history.goBack() : history.push(`/page/1`);
   };
   useClickOutside(ref, handleCloseButton);
 
@@ -37,6 +41,7 @@ const Details = () => {
     filterData();
   });
 
+  // Block scroll on render
   useEffect(() => {
     handleBlockScroll(true);
   }, []);
@@ -46,11 +51,17 @@ const Details = () => {
   const gender = detailed?.gender === "male" ? "Male" : "Female";
 
   return (
-    <div className="fixed left-0 top-0 flex items-center justify-center h-screen w-screen bg-opacity-50 bg-gray-700 blur-lg">
+    <motion.div
+      key={detailed?.login.salt}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed left-0 top-0 flex items-center justify-center h-screen w-screen bg-opacity-50 bg-gray-700 blur-lg"
+    >
       {detailed !== null ? (
         <div
           ref={ref}
-          className="p-8 shadow-lg bg-gray-100 mt-20 pt-16 relative opacity-100"
+          className="p-8 min-h-420 shadow-lg bg-gray-100 mt-20 pt-16 relative opacity-100"
         >
           <img
             className="rounded-full w-36 -mt-36 mx-auto shadow-sm"
@@ -103,7 +114,7 @@ const Details = () => {
           </Link>
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 
