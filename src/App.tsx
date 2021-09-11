@@ -27,16 +27,6 @@ function App() {
 
   const background = location.state && location.state.background;
 
-  const bg = !background
-    ? {
-        pathname: `/page/1`,
-        search: "",
-        hash: "",
-        state: undefined,
-        key: "xmn0oh",
-      }
-    : null;
-
   return (
     <Provider store={store}>
       <Layout>
@@ -45,9 +35,7 @@ function App() {
           <Route exact path="/page/:id" component={Dashboard} />
         </Switch>
 
-        {(background || bg) && (
-          <Route path="/details/:id" component={Details} />
-        )}
+        <Route path="/details/:id" component={Details} />
       </Layout>
     </Provider>
   );
