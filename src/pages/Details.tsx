@@ -46,11 +46,11 @@ const Details = () => {
   const gender = detailed?.gender === "male" ? "Male" : "Female";
 
   return (
-    <div className="fixed left-0 top-0 flex items-center justify-center h-screen w-screen bg-opacity-40 bg-gray-700 blur-lg">
+    <div className="fixed left-0 top-0 flex items-center justify-center h-screen w-screen bg-opacity-50 bg-gray-700 blur-lg">
       {detailed !== null ? (
         <div
           ref={ref}
-          className="p-8 rounded shadow-md bg-gray-100 mt-20 pt-16 relative opacity-100"
+          className="p-8 shadow-lg bg-gray-100 mt-20 pt-16 relative opacity-100"
         >
           <img
             className="rounded-full w-36 -mt-36 mx-auto shadow-sm"
