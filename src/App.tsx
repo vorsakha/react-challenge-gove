@@ -6,13 +6,11 @@ import Dashboard from "./pages/Dashboard";
 import Details from "./pages/Details";
 import apiReducer from "./redux/api/slice";
 import searchReducer from "./redux/searchResults/slice";
-import pageReducer from "./redux/page/slice";
 
 // Redux Config
 const reducer = combineReducers({
   apiReducer,
   searchReducer,
-  pageReducer,
 });
 
 const store = configureStore({
@@ -25,6 +23,7 @@ export type AppDispatch = typeof store.dispatch;
 function App() {
   const location: any = useLocation();
 
+  // Background of the modal route
   const background = location.state && location.state.background;
 
   return (
