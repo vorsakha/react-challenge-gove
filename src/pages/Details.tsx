@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams, Link, useHistory, useLocation } from "react-router-dom";
+import { useParams, useHistory, useLocation } from "react-router-dom";
 import { RiCloseLine as CloseIcon } from "@react-icons/all-files/ri/RiCloseLine";
 import { DetailedData } from "../../types";
 import { useAppSelector } from "../redux/hooks";
@@ -7,6 +7,7 @@ import formatDate from "../utils/formatDate";
 import handleBlockScroll from "../utils/handleBlockScroll";
 import useClickOutside from "../utils/useClickOutside";
 import { motion } from "framer-motion";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const Details = () => {
   const [detailed, setDetailed] = useState<DetailedData | null>(null);
@@ -34,7 +35,7 @@ const Details = () => {
   const filterData = () => {
     const newData = searchData.filter((item) => item.login.salt === id)[0];
 
-    setDetailed(newData);
+    newData !== undefined && setDetailed(newData);
   };
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const Details = () => {
     handleBlockScroll(true);
   }, []);
 
-  const name = `${detailed?.name.first} ${detailed?.name.last}` || "";
+  const name = `${detailed?.name.first} ${detailed?.name.last}`;
   const url = window.location.href;
   const gender = detailed?.gender === "male" ? "Male" : "Female";
 
@@ -109,12 +110,7 @@ const Details = () => {
           </p>
         </div>
       ) : (
-        <div>
-          404 Not found.{" "}
-          <Link className="font-bold" to="/">
-            Voltar
-          </Link>
-        </div>
+        <LoadingSpinner />
       )}
     </motion.div>
   );
