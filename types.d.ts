@@ -114,3 +114,7 @@ interface DetailedData {
   };
   login: { salt: string };
 }
+
+type StateType = {
+  currentPage: number | null;
+};
