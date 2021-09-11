@@ -4,11 +4,10 @@ import { ArrayTypes } from "../../types";
 import { useAppSelector } from "../redux/hooks";
 import { FaSortAlphaDown as AlphabeticIcon } from "@react-icons/all-files/fa/FaSortAlphaDown";
 import formatDate from "../utils/formatDate";
-import range from "../utils/range";
 
 const DataTable = () => {
   const [paginatedData, setPaginatedData] = useState<ArrayTypes>([]);
-  const [detailId, setDetailId] = useState([1]);
+  const [sort, setSort] = useState(false);
   const itemsPerPage = 9;
 
   const { searchData } = useAppSelector((state) => state.searchReducer);
@@ -18,25 +17,26 @@ const DataTable = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const itemsQty: number[] = range(50);
-    const indexStart = Number(id) || 1;
-
-    const sliced = itemsQty.slice(
-      indexStart !== 1 ? itemsPerPage * (indexStart - 1) : indexStart - 1,
-      itemsPerPage * indexStart
-    );
-
-    setDetailId(sliced);
-  }, [id]);
-
-  useEffect(() => {
     const startIndex = Number(id) * itemsPerPage - 9 || 0;
     const endIndex = startIndex + itemsPerPage;
 
-    const pag = searchData.slice(startIndex, endIndex);
+    let data = [...searchData];
+    data.sort((a, b) => {
+      var nameA = a.name.first.toUpperCase();
+      var nameB = b.name.first.toUpperCase();
+
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+
+      return 0;
+    });
+
+    const pag = sort
+      ? data.slice(startIndex, endIndex)
+      : searchData.slice(startIndex, endIndex);
 
     setPaginatedData(pag);
-  }, [id, searchData]);
+  }, [id, searchData, sort]);
 
   return (
     <div>
@@ -47,7 +47,10 @@ const DataTable = () => {
           <table className="border border-opacity-40 border-gray-700 p-4 w-full">
             <thead className="bg-gray-300">
               <tr className="border border-opacity-40 border-gray-700">
-                <th className="p-2 border border-opacity-40 border-gray-700 cursor-pointer relative">
+                <th
+                  className="p-2 border border-opacity-40 border-gray-700 cursor-pointer relative w-64"
+                  onClick={() => setSort(!sort)}
+                >
                   Name{" "}
                   <span className="absolute right-2 top-3.5 opacity-80">
                     <AlphabeticIcon />
@@ -63,7 +66,7 @@ const DataTable = () => {
               </tr>
             </thead>
             <tbody className="text-center">
-              {paginatedData?.map((item, key) => {
+              {paginatedData?.map((item) => {
                 const name = `${item.name.first} ${item.name.last}`;
 
                 return (
@@ -84,7 +87,7 @@ const DataTable = () => {
                       <Link
                         className="bg-gray-700 rounded font-bold text-white px-8 py-1.5 hover:bg-gray-600"
                         to={{
-                          pathname: `/details/${detailId[key]}`,
+                          pathname: `/details/${item.login.salt}`,
                           state: { background: location },
                         }}
                       >
