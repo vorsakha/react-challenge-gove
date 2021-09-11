@@ -3,11 +3,14 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import { ArrayTypes } from "../../types";
 import { useAppSelector } from "../redux/hooks";
 import { FaSortAlphaDown as AlphabeticIcon } from "@react-icons/all-files/fa/FaSortAlphaDown";
+import { RiArrowUpDownFill as GenderIcon } from "@react-icons/all-files/ri/RiArrowUpDownFill";
 import formatDate from "../utils/formatDate";
 
 const DataTable = () => {
   const [paginatedData, setPaginatedData] = useState<ArrayTypes>([]);
   const [sort, setSort] = useState(false);
+  const [sortName, setSortName] = useState(false);
+  const [sortGender, setSortGender] = useState(false);
   const itemsPerPage = 9;
 
   const { searchData } = useAppSelector((state) => state.searchReducer);
@@ -20,23 +23,44 @@ const DataTable = () => {
     const startIndex = Number(id) * itemsPerPage - 9 || 0;
     const endIndex = startIndex + itemsPerPage;
 
-    let data = [...searchData];
-    data.sort((a, b) => {
-      var nameA = a.name.first.toUpperCase();
-      var nameB = b.name.first.toUpperCase();
+    let data = [] as ArrayTypes;
 
-      if (nameA < nameB) return -1;
-      if (nameA > nameB) return 1;
+    if (sortName) {
+      data = [...searchData];
 
-      return 0;
-    });
+      data.sort((a, b) => {
+        const nameA = a.name.first.toUpperCase();
+        const nameB = b.name.first.toUpperCase();
+
+        if (nameA < nameB) return -1;
+        if (nameA > nameB) return 1;
+
+        return 0;
+      });
+    } else {
+      data = [...searchData];
+
+      data.sort((a, b) => {
+        const genderA = a.gender;
+        const genderB = b.gender;
+
+        if (sortGender) {
+          if (genderA > genderB) return -1;
+          if (genderA < genderB) return 1;
+        }
+
+        if (genderA < genderB) return -1;
+        if (genderA > genderB) return 1;
+        return 0;
+      });
+    }
 
     const pag = sort
       ? data.slice(startIndex, endIndex)
       : searchData.slice(startIndex, endIndex);
 
     setPaginatedData(pag);
-  }, [id, searchData, sort]);
+  }, [id, searchData, sortName, sortGender, sort]);
 
   return (
     <div>
@@ -49,15 +73,29 @@ const DataTable = () => {
               <tr className="border border-opacity-40 border-gray-700">
                 <th
                   className="p-2 border border-opacity-40 border-gray-700 cursor-pointer relative w-64"
-                  onClick={() => setSort(!sort)}
+                  onClick={() => {
+                    setSortGender(false);
+                    setSortName(!sortName);
+                    setSort(true);
+                  }}
                 >
-                  Name{" "}
+                  Name
                   <span className="absolute right-2 top-3.5 opacity-80">
                     <AlphabeticIcon />
                   </span>
                 </th>
-                <th className="p-2 border border-opacity-40 border-gray-700">
+                <th
+                  className="p-2 border border-opacity-40 border-gray-700 cursor-pointer relative"
+                  onClick={() => {
+                    setSortName(false);
+                    setSortGender(!sortGender);
+                    setSort(true);
+                  }}
+                >
                   Gender
+                  <span className="absolute right-2 top-3.5 opacity-80">
+                    <GenderIcon className="text-lg" />
+                  </span>
                 </th>
                 <th className="p-2">Birth</th>
                 <th className="p-2 border border-opacity-40 border-gray-700">
