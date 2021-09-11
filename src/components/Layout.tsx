@@ -9,11 +9,12 @@ const Layout: React.FC = ({ children }) => {
 
   const dispatch = useAppDispatch();
 
+  // If `data` state is empty, fetch API data
   useEffect(() => {
     if (data.length === 0 || data === null) {
       dispatch(getPatients());
     }
-  }, []);
+  });
 
   return (
     <div className="bg-gray-100 min-h-screen">

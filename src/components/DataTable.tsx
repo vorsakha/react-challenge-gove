@@ -19,10 +19,10 @@ const DataTable = () => {
 
   const location = useLocation();
 
+  // Prepare an sorted array if user requires sorting by name or gender
+  // Slice array with required items per page
+  // Add result to paginated data state
   useEffect(() => {
-    const startIndex = Number(id) * itemsPerPage - 9 || 0;
-    const endIndex = startIndex + itemsPerPage;
-
     let data = [] as ArrayTypes;
 
     if (sortName) {
@@ -51,9 +51,13 @@ const DataTable = () => {
 
         if (genderA < genderB) return -1;
         if (genderA > genderB) return 1;
+
         return 0;
       });
     }
+
+    const startIndex = Number(id) * itemsPerPage - 9 || 0;
+    const endIndex = startIndex + itemsPerPage;
 
     const pag = sort
       ? data.slice(startIndex, endIndex)

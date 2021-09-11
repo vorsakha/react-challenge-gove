@@ -11,6 +11,8 @@ export default function useClickOutside(
     console.error("ref is not reachable | useOutsideClick hook");
 
   useEffect(() => {
+    // If the event detects a click outside of the ref target
+    // Deploy action function
     function handleClickOutside(event: Event) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
         action();

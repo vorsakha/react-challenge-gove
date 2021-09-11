@@ -1,5 +1,5 @@
 export default function range(number: number) {
-  let range = [];
+  const range = [];
 
   if (number >= 1) {
     for (let i = 1; i <= number; i++) {

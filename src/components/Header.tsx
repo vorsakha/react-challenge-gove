@@ -10,7 +10,7 @@ const Header = () => {
         className="flex flex-row gap-2 text-3xl items-center font-bold pl-4"
       >
         <Logo />
-        Company
+        Pharma Inc
       </Link>
 
       <div className="text-2xl pr-4">

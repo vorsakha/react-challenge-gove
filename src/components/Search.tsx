@@ -9,8 +9,14 @@ const Search = () => {
   const [filterByName, setFilterByName] = useState<boolean>(true);
 
   const { pathname } = useLocation();
+
   const history = useHistory();
 
+  const { data } = useAppSelector((state) => state.apiReducer);
+
+  const dispatch = useAppDispatch();
+
+  // When searching, jump to start page
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (pathname !== "/") {
       history.push("/");
@@ -19,10 +25,8 @@ const Search = () => {
     setParams(e.target.value);
   };
 
-  const { data } = useAppSelector((state) => state.apiReducer);
-
-  const dispatch = useAppDispatch();
-
+  // Use search params to filter data
+  // Dispatch that filtered data to global state
   useEffect(() => {
     const filterArray = filterByName
       ? data.filter((item) => {
