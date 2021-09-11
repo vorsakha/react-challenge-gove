@@ -32,9 +32,7 @@ const Search = () => {
           return name.includes(normalizedParams);
         })
       : data.filter((item) => {
-          const nationality = item.location.country
-            .replace(/ /g, "")
-            .toUpperCase();
+          const nationality = item.nat.replace(/ /g, "").toUpperCase();
           const normalizedParams = params.replace(/ /g, "").toUpperCase();
 
           return nationality.includes(normalizedParams);
