@@ -1,4 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { AnimatePresence } from "framer-motion";
 import { Provider } from "react-redux";
 import { Switch, Route, useLocation } from "react-router-dom";
 import Layout from "./components/Layout";
@@ -34,7 +35,9 @@ function App() {
           <Route exact path="/page/:id" component={Dashboard} />
         </Switch>
 
-        <Route path="/details/:id" component={Details} />
+        <AnimatePresence>
+          <Route path="/details/:id" component={Details} />
+        </AnimatePresence>
       </Layout>
     </Provider>
   );
