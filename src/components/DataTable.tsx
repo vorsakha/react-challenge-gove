@@ -85,7 +85,7 @@ const DataTable = () => {
                     </td>
                     <td className="border border-opacity-40 border-gray-700 p-2">
                       <Link
-                        className="bg-gray-700 rounded font-bold text-white px-8 py-1.5 hover:bg-gray-600"
+                        className="bg-gray-700 font-bold text-white px-8 py-1.5 hover:bg-gray-600"
                         to={{
                           pathname: `/details/${item.login.salt}`,
                           state: { background: location },
