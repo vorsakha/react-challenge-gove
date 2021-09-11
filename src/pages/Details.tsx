@@ -63,11 +63,13 @@ const Details = () => {
           ref={ref}
           className="p-8 min-h-420 shadow-lg bg-gray-100 mt-20 pt-16 relative opacity-100"
         >
-          <img
-            className="rounded-full w-36 -mt-36 mx-auto shadow-sm"
-            src={detailed?.picture.large}
-            alt={name}
-          />
+          <div className="flex items-center mx-auto rounded-full w-36 h-36 -mt-36 shadow-sm bg-gray-300">
+            <img
+              className="rounded-full w-36 text-center mx-auto self-center shadow-sm"
+              src={detailed?.picture.large}
+              alt={name}
+            />
+          </div>
           <button
             className="font-bold absolute right-0 top-0 p-2 text-2xl hover:text-gray-700"
             onClick={() => handleCloseButton()}
