@@ -1,4 +1,5 @@
 import DataTable from "../components/DataTable";
+import Pagination from "../components/Pagination";
 import { useAppSelector } from "../redux/hooks";
 
 const Dashboard = () => {
@@ -7,10 +8,12 @@ const Dashboard = () => {
   return (
     <div>
       {loading ? (
-        <div>loading...</div>
+        <div className="mx-auto pt-8">loading...</div>
       ) : (
         <>
           <DataTable />
+
+          <Pagination />
         </>
       )}
     </div>
