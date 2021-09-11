@@ -1,4 +1,5 @@
 import DataTable from "../components/DataTable";
+import LoadingSpinner from "../components/LoadingSpinner";
 import Pagination from "../components/Pagination";
 import { useAppSelector } from "../redux/hooks";
 
@@ -7,8 +8,8 @@ const Dashboard = () => {
 
   return (
     <div>
-      {loading ? (
-        <div className="mx-auto pt-8">loading...</div>
+      {!loading ? (
+        <LoadingSpinner />
       ) : (
         <>
           <DataTable />
