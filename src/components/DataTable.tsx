@@ -84,7 +84,7 @@ const DataTable = () => {
                   }}
                 >
                   Name
-                  <span className="absolute right-2 top-3.5 opacity-80">
+                  <span className="absolute right-2 top-3.5 opacity-70">
                     <AlphabeticIcon />
                   </span>
                 </th>
@@ -97,7 +97,7 @@ const DataTable = () => {
                   }}
                 >
                   Gender
-                  <span className="absolute right-2 top-3.5 opacity-80">
+                  <span className="absolute right-1.5 top-3.5 opacity-70">
                     <GenderIcon className="text-lg" />
                   </span>
                 </th>
