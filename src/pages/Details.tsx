@@ -88,7 +88,7 @@ const Details = () => {
           </p>
           <p className="py-1 mr-1">
             <span className="font-bold">Date of birth:</span>{" "}
-            {formatDate(detailed?.dob.date || "")}
+            {formatDate(detailed?.dob.date || "", "EN")}
           </p>
           <p className="py-1 mr-1">
             <span className="font-bold">Phone number:</span> {detailed?.phone}

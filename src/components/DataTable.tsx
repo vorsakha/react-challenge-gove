@@ -123,7 +123,7 @@ const DataTable = () => {
                       {item.gender === "male" ? "Male" : "Female"}
                     </td>
                     <td className="border border-opacity-40 border-gray-700 p-2">
-                      {formatDate(item.dob.date)}
+                      {formatDate(item.dob.date, "EN")}
                     </td>
                     <td className="border border-opacity-40 border-gray-700 p-2">
                       <Link
